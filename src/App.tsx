@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Proyectos from './pages/Proyectos';
 import Perfil from './pages/Perfil';
+import ProyectoDetalle from './pages/ProyectoDetalle';
 
 // Componente para rutas protegidas
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -41,6 +42,7 @@ const AppContent: React.FC = () => {
             {/* Rutas públicas */}
             <Route path="/" element={<Home />} />
             <Route path="/proyectos" element={<Proyectos />} />
+            <Route path="/proyectos/:id" element={<ProyectoDetalle />} />
             
             {/* Rutas de autenticación */}
             <Route 

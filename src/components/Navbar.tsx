@@ -2,6 +2,8 @@ import React from 'react';
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import icono from '../assets/icons/icono.png';
+
 
 const NavigationBar: React.FC = () => {
   const { usuario, isAuthenticated, logout } = useAuth();
@@ -15,7 +17,14 @@ const NavigationBar: React.FC = () => {
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
-            <i className="bi bi-code-square me-2"></i>
+             <img
+      src={icono}
+      alt="Logo"
+      width="30"
+      height="30"
+      className="d-inline-block align-top me-2"
+    />
+            {/* <i className="bi bi-code-square me-2"></i> */}
             ProjectPeek
           </Navbar.Brand>
         </LinkContainer>

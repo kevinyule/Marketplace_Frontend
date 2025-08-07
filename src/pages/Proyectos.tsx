@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, InputGroup, Alert, Spinner } from 'react-bootstrap';
 import { proyectoService} from '../services/api';
 import type { Proyecto, Usuario } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const Proyectos: React.FC = () => {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
@@ -9,6 +10,9 @@ const Proyectos: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [busqueda, setBusqueda] = useState('');
+
+const navigate = useNavigate();
+
 
   useEffect(() => {
     cargarProyectos();
@@ -119,7 +123,10 @@ const Proyectos: React.FC = () => {
         ) : (
           proyectosFiltrados.map((proyecto) => (
             <Col key={proyecto._id} md={6} lg={4} className="mb-4">
-              <Card className="h-100 shadow-sm">
+              <Card className="h-100 shadow-sm"
+               onClick={() => navigate(`/proyectos/${proyecto._id}`)}
+  style={{ cursor: 'pointer' }}
+              >
                 {proyecto.imagenes && proyecto.imagenes.length > 0 && (
                   <Card.Img
                     variant="top"

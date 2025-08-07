@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import rocketGif from '../assets/icons/rocket.gif';
 
 const Home: React.FC = () => {
   const { isAuthenticated, usuario } = useAuth();
@@ -14,7 +15,7 @@ const Home: React.FC = () => {
           <Row className="align-items-center min-vh-50">
             <Col lg={6}>
               <h1 className="display-4 fw-bold mb-4">
-                TalentTech Marketplace
+                Project Peek
               </h1>
               <p className="lead mb-4">
                 Descubre, comparte y encuentra increíbles proyectos de desarrollo web. 
@@ -29,7 +30,7 @@ const Home: React.FC = () => {
                   <div className="d-flex gap-3">
                     <Link to="/proyectos">
                       <Button variant="light" size="lg">
-                        <i className="bi bi-grid me-2"></i>
+                        <i className="bi bi-grid me-2 "></i>
                         Explorar Proyectos
                       </Button>
                     </Link>
@@ -61,7 +62,12 @@ const Home: React.FC = () => {
             
             <Col lg={6} className="text-center">
               <div className="bg-light rounded p-4 text-dark">
-                <i className="bi bi-code-slash display-1 text-primary"></i>
+                {/* <i className="bi bi-code-slash display-1 text-primary"></i> */}
+                <img 
+  src={rocketGif} 
+  alt="rocket" 
+  style={{ width: '64px', height: '64px' }} 
+/>
                 <h3 className="mt-3">Muestra tu trabajo</h3>
                 <p className="mb-0">
                   Comparte tus proyectos web y conecta con otros desarrolladores

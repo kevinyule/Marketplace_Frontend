@@ -322,11 +322,11 @@ const ProyectoDetalle: React.FC = () => {
                 </div>
 
                 {proyecto.tecnologias && proyecto.tecnologias.length > 0 && (
-                  <div className="col-12">
+                  <div className="col-12 ">
                     <strong>Tecnologías ({proyecto.tecnologias.length}):</strong>
                     <div className="mt-2">
                       {proyecto.tecnologias.map((tech, index) => (
-                        <Badge key={index} bg="outline-secondary" className="me-1 mb-1">
+                        <Badge key={index} bg="outline-secondary" className="me-1 mb-1  text-primary-emphasis">
                           {tech}
                         </Badge>
                       ))}
