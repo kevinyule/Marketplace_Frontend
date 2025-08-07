@@ -151,10 +151,10 @@ const Home: React.FC = () => {
                       Crear Cuenta Gratis
                     </Button>
                   </Link>
-                  <Link to="/proyectos">
+                  <Link to="/login">
                     <Button variant="outline-primary" size="lg">
-                      <i className="bi bi-grid me-2"></i>
-                      Explorar Proyectos
+                      <i className="bi bi-box-arrow-in-right me-2"></i>
+                      Iniciar Sesión
                     </Button>
                   </Link>
                 </div>
@@ -163,6 +163,28 @@ const Home: React.FC = () => {
           </Container>
         </div>
       )}
+
+      {/* Stats Section */}
+      <Container className="py-5">
+        <Row className="text-center">
+          <Col md={3} className="mb-3">
+            <h3 className="text-primary fw-bold">100+</h3>
+            <p className="text-muted">Proyectos Compartidos</p>
+          </Col>
+          <Col md={3} className="mb-3">
+            <h3 className="text-success fw-bold">50+</h3>
+            <p className="text-muted">Desarrolladores Activos</p>
+          </Col>
+          <Col md={3} className="mb-3">
+            <h3 className="text-info fw-bold">20+</h3>
+            <p className="text-muted">Tecnologías Diferentes</p>
+          </Col>
+          <Col md={3} className="mb-3">
+            <h3 className="text-warning fw-bold">24/7</h3>
+            <p className="text-muted">Soporte Disponible</p>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };

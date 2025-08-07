@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
-import type{ Proyecto } from '../services/api';
+import type { Proyecto } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 interface ProyectoFormProps {

@@ -16,7 +16,7 @@ const NavigationBar: React.FC = () => {
         <LinkContainer to="/">
           <Navbar.Brand>
             <i className="bi bi-code-square me-2"></i>
-            TalentTech Marketplace
+            ProjectPeek
           </Navbar.Brand>
         </LinkContainer>
         
@@ -51,8 +51,9 @@ const NavigationBar: React.FC = () => {
                   variant="outline-light" 
                   size="sm" 
                   onClick={handleLogout}
+                  className="logout-btn"
                 >
-                  <i className="bi bi-box-arrow-right me-1"></i>
+                  <i className="bi bi-box-arrow-right me-1 "></i>
                   Salir
                 </Button>
               </>

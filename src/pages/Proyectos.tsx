@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, InputGroup, Alert, Spinner } from 'react-bootstrap';
-import { proyectoService } from '../services/api';
+import { proyectoService} from '../services/api';
 import type { Proyecto, Usuario } from '../services/api';
-
 
 const Proyectos: React.FC = () => {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
@@ -126,7 +125,7 @@ const Proyectos: React.FC = () => {
                     variant="top"
                     src={proyecto.imagenes[0]}
                     style={{ height: '200px', objectFit: 'cover' }}
-                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    onError={(e: React.ChangeEvent<HTMLInputElement>) => {
                       e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Proyecto';
                     }}
                   />
