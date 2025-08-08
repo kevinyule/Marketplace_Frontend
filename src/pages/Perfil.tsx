@@ -226,9 +226,9 @@ const Perfil: React.FC = () => {
                     variant="top"
                     src={proyecto.imagenes[0]}
                     style={{ height: '200px', objectFit: 'cover' }}
-                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    /* onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                       e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Proyecto';
-                    }}
+                    }} */
                   />
                 )}
 

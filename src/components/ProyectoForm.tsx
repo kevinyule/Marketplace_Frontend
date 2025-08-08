@@ -17,10 +17,11 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
   error = ''
 }) => {
   const { usuario } = useAuth();
+
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
-    imagenes: '',
+    imagenes: [] as string[], // ahora siempre es array
     documentacion: '',
     tecnologias: '',
     enlaceDemo: '',
@@ -32,7 +33,7 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
       setFormData({
         nombre: proyecto.nombre || '',
         descripcion: proyecto.descripcion || '',
-        imagenes: proyecto.imagenes?.join(', ') || '',
+        imagenes: proyecto.imagenes || [], // si viene array, se setea directo
         documentacion: proyecto.documentacion || '',
         tecnologias: proyecto.tecnologias?.join(', ') || '',
         enlaceDemo: proyecto.enlaceDemo || '',
@@ -49,30 +50,44 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const readers = Array.from(files).map(file => {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(readers).then((imagesBase64) => {
+      setFormData(prev => ({
+        ...prev,
+        imagenes: [...prev.imagenes, ...imagesBase64] // acumulamos
+      }));
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!usuario) return;
-
-    // Procesar arrays
-    const imagenes = formData.imagenes
-      .split(',')
-      .map(img => img.trim())
-      .filter(img => img.length > 0);
 
     const tecnologias = formData.tecnologias
       .split(',')
       .map(tech => tech.trim())
-      .filter(tech => tech.length > 0);
+      .filter(Boolean);
 
     const proyectoData: Omit<Proyecto, '_id'> = {
-      nombre: formData.nombre,
-      descripcion: formData.descripcion,
-      imagenes,
-      documentacion: formData.documentacion || undefined,
+      nombre: formData.nombre.trim(),
+      descripcion: formData.descripcion.trim(),
+      imagenes: formData.imagenes, // ya es array real
+      documentacion: formData.documentacion.trim() || undefined,
       tecnologias,
-      enlaceDemo: formData.enlaceDemo || undefined,
-      enlaceRepositorio: formData.enlaceRepositorio || undefined,
+      enlaceDemo: formData.enlaceDemo.trim() || undefined,
+      enlaceRepositorio: formData.enlaceRepositorio.trim() || undefined,
       autor: usuario._id,
     };
 
@@ -135,7 +150,7 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
             name="descripcion"
             value={formData.descripcion}
             onChange={handleInputChange}
-            placeholder="Describe tu proyecto, sus funcionalidades principales y qué problema resuelve..."
+            placeholder="Describe tu proyecto..."
             required
           />
         </Form.Group>
@@ -145,17 +160,16 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
             <Form.Group className="mb-3">
               <Form.Label>
                 <i className="bi bi-images me-2"></i>
-                URLs de imágenes
+                Imágenes del proyecto
               </Form.Label>
               <Form.Control
-                type="text"
-                name="imagenes"
-                value={formData.imagenes}
-                onChange={handleInputChange}
-                placeholder="URL1, URL2, URL3 (separadas por comas)"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileChange}
               />
               <Form.Text className="text-muted">
-                Separa múltiples URLs con comas
+                Puedes subir varias imágenes, se convertirán automáticamente en Base64
               </Form.Text>
             </Form.Group>
           </Col>
@@ -189,11 +203,8 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
                 name="tecnologias"
                 value={formData.tecnologias}
                 onChange={handleInputChange}
-                placeholder="React, Node.js, MongoDB, CSS3 (separadas por comas)"
+                placeholder="React, Node.js, MongoDB, CSS3"
               />
-              <Form.Text className="text-muted">
-                Separa las tecnologías con comas
-              </Form.Text>
             </Form.Group>
           </Col>
 
@@ -215,11 +226,7 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
         </Row>
 
         <div className="d-flex gap-2 justify-content-end">
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={loading}
-          >
+          <Button type="submit" variant="primary" disabled={loading}>
             {loading ? (
               <>
                 <span className="spinner-border spinner-border-sm me-2" />
@@ -232,22 +239,6 @@ const ProyectoForm: React.FC<ProyectoFormProps> = ({
               </>
             )}
           </Button>
-        </div>
-
-        <hr className="my-4" />
-
-        <div className="row">
-          <div className="col-12">
-            <small className="text-muted">
-              <strong>Consejos:</strong>
-            </small>
-            <ul className="small text-muted mt-2">
-              <li>Usa una descripción clara y concisa que explique qué hace tu proyecto</li>
-              <li>Incluye capturas de pantalla para mostrar la interfaz</li>
-              <li>Agrega un enlace de demostración en vivo si está disponible</li>
-              <li>Lista las tecnologías principales que utilizaste</li>
-            </ul>
-          </div>
         </div>
       </Form>
     </>
